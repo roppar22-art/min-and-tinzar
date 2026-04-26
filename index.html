@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Min Min & Tinzar Wedding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    font-family:'Playfair Display', serif;
+    background:black;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Tap to open */
+#cover {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    flex-direction:column;
+}
+
+#cover h1{
+    font-family:'Great Vibes', cursive;
+    font-size:50px;
+    color:gold;
+}
+
+.tap-btn{
+    margin-top:20px;
+    padding:12px 25px;
+    border:1px solid gold;
+    background:none;
+    color:gold;
+    cursor:pointer;
+}
+
+/* Hero */
+.hero{
+    height:100vh;
+    background:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed') center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero h1{
+    font-family:'Great Vibes';
+    font-size:60px;
+    color:gold;
+    animation:fadeIn 2s;
+}
+
+.typing{
+    font-size:20px;
+    border-right:2px solid gold;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+/* Section */
+.section{
+    padding:60px 20px;
+    text-align:center;
+}
+
+/* Gallery */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+}
+
+.gallery img{
+    width:100%;
+    border-radius:15px;
+    transition:0.4s;
+}
+
+.gallery img:hover{
+    transform:scale(1.05);
+}
+
+/* Countdown */
+.countdown{
+    font-size:25px;
+    color:gold;
+}
+
+/* Flowers */
+.flower{
+    position:fixed;
+    top:-50px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh);
+    }
+}
+
+/* Fade */
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Cover -->
+<div id="cover">
+    <h1>Min Min & Tinzar</h1>
+    <button class="tap-btn" onclick="start()">Tap to Open</button>
+</div>
+
+<!-- Music -->
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6d60d23fcb.mp3">
+</audio>
+
+<!-- Hero -->
+<div class="hero">
+    <h1>Min Min & Tinzar</h1>
+    <div class="typing" id="typing"></div>
+</div>
+
+<!-- Countdown -->
+<div class="section">
+    <h2>Wedding Countdown</h2>
+    <div class="countdown" id="countdown"></div>
+</div>
+
+<!-- Gallery -->
+<div class="section">
+<h2>Our Memories</h2>
+<div class="gallery">
+<img src="https://i.postimg.cc/XNzq3WZW/file-000000002f9871f4beb2f36b81dfad9f.png">
+<img src="https://i.postimg.cc/1XF8K4zJ/IMG-20260206-150042.jpg">
+<img src="https://i.postimg.cc/QC7FqVMq/IMG-20260207-WA0015.jpg">
+<img src="https://i.postimg.cc/KjT154Yr/IMG-20260207-WA0034.jpg">
+<img src="https://i.postimg.cc/7hz5NbLB/MTXX-20260206-164149865.jpg">
+</div>
+</div>
+
+<!-- Location -->
+<div class="section">
+<h2>Location</h2>
+<iframe src="https://maps.google.com/maps?q=Abu%20Dhabi%20Family%20Court&t=&z=13&ie=UTF8&iwloc=&output=embed"
+width="100%" height="300"></iframe>
+</div>
+
+<script>
+
+/* Start */
+function start(){
+    document.getElementById("cover").style.display="none";
+    document.getElementById("music").play();
+    fireworks();
+}
+
+/* Typing */
+let text="29 April 2026 | Abu Dhabi Cavill Family Court";
+let i=0;
+function typing(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typing,50);
+    }
+}
+typing();
+
+/* Countdown */
+let target=new Date("April 29, 2026 00:00:00").getTime();
+setInterval(()=>{
+    let now=new Date().getTime();
+    let diff=target-now;
+
+    let d=Math.floor(diff/(1000*60*60*24));
+    let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    let m=Math.floor((diff%(1000*60*60))/(1000*60));
+    let s=Math.floor((diff%(1000*60))/1000);
+
+    document.getElementById("countdown").innerHTML=
+    d+"d "+h+"h "+m+"m "+s+"s";
+},1000);
+
+/* Flowers */
+setInterval(()=>{
+    let f=document.createElement("div");
+    f.className="flower";
+    f.innerHTML="🌸";
+    f.style.left=Math.random()*100+"vw";
+    f.style.animationDuration=(3+Math.random()*5)+"s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),8000);
+},300);
+
+/* Fireworks */
+function fireworks(){
+    setInterval(()=>{
+        let f=document.createElement("div");
+        f.style.position="fixed";
+        f.style.left=Math.random()*100+"vw";
+        f.style.top=Math.random()*100+"vh";
+        f.style.fontSize="20px";
+        f.innerHTML="✨";
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),1000);
+    },200);
+}
+
+</script>
+
+</body>
+</html>
