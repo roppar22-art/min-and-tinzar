@@ -4,189 +4,205 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>Min Min & Tinzar — Wedding Invitation</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+
 <style>
-  :root {
-    --green-dark: #3b4a3a;
-    --green-med:  #4e6349;
-    --green-light:#6b7f5e;
-    --blush:      #f5ede8;
-    --blush-dark: #e8d9d2;
-    --blush-deep: #d4b8ae;
-    --gold:       #c9a96e;
-    --gold-light: #e8d5a8;
-    --text-dark:  #2a2a2a;
-    --text-mid:   #5a5a5a;
-  }
+:root{
+  --green-dark:#3b4a3a;
+  --green-light:#6b7f5e;
+  --blush:#f5ede8;
+  --blush-deep:#d4b8ae;
+  --gold-light:#e8d5a8;
+  --text-dark:#2a2a2a;
+  --text-mid:#5a5a5a;
+}
 
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  html, body {
-    height: 100%;
-    background: var(--blush);
-    font-family: 'Jost', sans-serif;
-    overflow-x: hidden;
-    touch-action: manipulation;
-  }
+body{
+  font-family:'Jost',sans-serif;
+  background:var(--blush);
+  overflow:hidden;
+}
 
-  /* PAGE SYSTEM */
-  .page {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-    overflow-y: auto;
-  }
-  .page.active { opacity: 1; pointer-events: all; }
+.page{
+  position:fixed;
+  inset:0;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s;
+  overflow-y:auto;
+}
 
-  /* PAGE 1 — ENVELOPE */
-  #page-envelope { background: var(--blush); }
+.page.active{
+  opacity:1;
+  pointer-events:auto;
+}
 
-  .env-header {
-    text-align: center;
-    padding: 36px 20px 16px;
-  }
-  .env-header .script-names {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(40px, 10vw, 56px);
-    color: var(--green-dark);
-  }
+/* ENVELOPE */
+#page-envelope{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
 
-  .env-wrap {
-    position: relative;
-    width: min(300px, 80vw);
-    cursor: pointer;
-    perspective: 1000px;
-  }
+.env-wrap{
+  width:280px;
+  cursor:pointer;
+}
 
-  .envelope {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    background: var(--green-dark);
-    border-radius: 5px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
+.envelope{
+  width:100%;
+  height:180px;
+  background:var(--green-dark);
+  position:relative;
+  border-radius:6px;
+}
 
-  .env-flap {
-    position: absolute;
-    top: 0; width: 100%; height: 100%;
-    background: var(--green-med);
-    clip-path: polygon(0 0, 100% 0, 50% 50%);
-    transform-origin: top;
-    transition: transform 0.6s ease;
-    z-index: 2;
-  }
+.env-flap{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:50%;
+  background:linear-gradient(#4e6349,#2e3b2d);
+  transform-origin:top;
+  transition:.8s;
+}
 
-  .wax-seal {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -20%);
-    width: 50px; height: 50px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-family: 'Great Vibes';
-    z-index: 3;
-    transition: 0.5s;
-  }
+.env-wrap.opening .env-flap{
+  transform:rotateX(-180deg);
+}
 
-  .env-wrap.opening .env-flap { transform: rotateX(180deg); }
-  .env-wrap.opening .wax-seal { opacity: 0; transform: translate(-50%, -100%) scale(0); }
+/* DASHBOARD */
+#page-dashboard{
+  padding-top:20px;
+}
 
-  /* DASHBOARD TILES */
-  .dash-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    padding: 20px;
-    width: 100%; max-width: 400px;
-  }
+.dash-hero{
+  background:var(--green-dark);
+  color:white;
+  text-align:center;
+  padding:30px;
+}
 
-  .card-tile {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    cursor: pointer;
-  }
+.dash-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:12px;
+}
 
-  .hidden { display: none; }
-  
-  #music-btn {
-    position: fixed; top: 20px; right: 20px;
-    z-index: 100; background: white; border: none;
-    padding: 10px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  }
+.card{
+  background:white;
+  padding:12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.bottom-row{
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
+}
+
+.faq-circle{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:var(--green-dark);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
 </style>
 </head>
+
 <body>
 
-<button id="music-btn">🎵</button>
-
+<!-- PAGE 1 -->
 <div class="page active" id="page-envelope">
-  <div class="env-header">
-    <div class="script-names">Min Min & Tinzar</div>
-    <div style="letter-spacing: 3px; color: var(--green-light);">12 · 14 · 2025</div>
-  </div>
-
-  <div class="env-wrap" id="envelope-wrap" onclick="openEnvelope()">
+  <div class="env-wrap" id="env">
     <div class="envelope">
       <div class="env-flap"></div>
-      <div class="wax-seal">MT</div>
     </div>
   </div>
-  <p style="margin-top: 20px; color: var(--green-light); letter-spacing: 2px;">TAP TO OPEN</p>
+  <p>Tap to open</p>
 </div>
 
+<!-- PAGE 2 -->
 <div class="page" id="page-dashboard">
-  <h2 style="font-family: 'Great Vibes'; font-size: 35px; color: var(--green-dark);">Wedding Details</h2>
+  <div class="dash-hero">
+    <h2>Min Min & Tinzar</h2>
+  </div>
+
   <div class="dash-grid">
-    <div class="card-tile">
-      <div style="font-size: 30px;">📅</div>
-      <p>Dec 14, 2025</p>
+
+    <div class="card" onclick="showPage('page-details')">
+      Wedding Details
     </div>
-    <div class="card-tile">
-      <div style="font-size: 30px;">📍</div>
-      <p>Jardin de Josefina</p>
+
+    <div class="card" onclick="showPage('page-timeline')">
+      Timeline
     </div>
-    <div class="card-tile" style="grid-column: span 2;">
-      <div style="font-size: 30px;">💌</div>
-      <p>Kindly RSVP</p>
+
+    <div class="card" onclick="showPage('page-faq')">
+      FAQ
+    </div>
+
+    <div class="card">
+      RSVP
+    </div>
+
+  </div>
+
+  <div class="bottom-row">
+    <div style="font-size:30px;opacity:.4">🌼</div>
+
+    <div class="faq-circle" onclick="showPage('page-faq')">
+      <div>HELP</div>
     </div>
   </div>
-  <button class="go-back" onclick="location.reload()">Back to Cover</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page-details">
+  <h2 style="padding:20px">Wedding Details</h2>
+  <button onclick="showPage('page-dashboard')">Back</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page-timeline">
+  <h2 style="padding:20px">Timeline</h2>
+  <button onclick="showPage('page-dashboard')">Back</button>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page-faq">
+  <h2 style="padding:20px">FAQ</h2>
+  <button onclick="showPage('page-dashboard')">Back</button>
 </div>
 
 <script>
-  // ၁။ အိတ်ဖွင့်တဲ့ Function
-  function openEnvelope() {
-    const env = document.getElementById('envelope-wrap');
-    env.classList.add('opening');
-    
-    // ၁ စက္ကန့်နေရင် နောက်စာမျက်နှာကိုသွားမယ်
-    setTimeout(() => {
-      document.getElementById('page-envelope').classList.remove('active');
-      document.getElementById('page-dashboard').classList.add('active');
-    }, 1000);
-  }
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>{
+    p.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
 
-  // ၂။ သီချင်းဖွင့်ဖို့ (ရွေးချယ်စရာ)
-  let musicPlaying = false;
-  const musicBtn = document.getElementById('music-btn');
-  musicBtn.onclick = () => {
-    musicPlaying = !musicPlaying;
-    musicBtn.innerText = musicPlaying ? "⏸️" : "🎵";
-    // ဒီမှာ သီချင်း link ရှိရင် ထည့်လို့ရပါတယ်
-  };
+document.getElementById("env").addEventListener("click",()=>{
+  document.getElementById("env").classList.add("opening");
+
+  setTimeout(()=>{
+    showPage("page-dashboard");
+  },800);
+});
 </script>
 
 </body>
 </html>
-
