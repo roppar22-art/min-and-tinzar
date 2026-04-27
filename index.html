@@ -2,37 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>Min Min & Tinzar — Wedding Invitation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Min Min & Tinzar Wedding</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400&display=swap" rel="stylesheet"/>
 
 <style>
-:root{
-  --green-dark:#3b4a3a;
-  --green-light:#6b7f5e;
-  --blush:#f5ede8;
-  --blush-deep:#d4b8ae;
-  --gold-light:#e8d5a8;
-  --text-dark:#2a2a2a;
-  --text-mid:#5a5a5a;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-  font-family:'Jost',sans-serif;
-  background:var(--blush);
+  margin:0;
+  font-family:Jost,sans-serif;
+  background:#f5ede8;
   overflow:hidden;
 }
 
 .page{
   position:fixed;
   inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   opacity:0;
   pointer-events:none;
-  transition:.4s;
-  overflow-y:auto;
+  transition:.5s;
 }
 
 .page.active{
@@ -41,82 +33,78 @@ body{
 }
 
 /* ENVELOPE */
-#page-envelope{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-.env-wrap{
+.envelope{
   width:280px;
+  height:180px;
+  background:#3b4a3a;
+  border-radius:6px;
+  position:relative;
   cursor:pointer;
 }
 
-.envelope{
-  width:100%;
-  height:180px;
-  background:var(--green-dark);
-  position:relative;
-  border-radius:6px;
-}
-
-.env-flap{
+.flap{
   position:absolute;
-  top:0;
   width:100%;
   height:50%;
+  top:0;
   background:linear-gradient(#4e6349,#2e3b2d);
   transform-origin:top;
   transition:.8s;
 }
 
-.env-wrap.opening .env-flap{
+.open .flap{
   transform:rotateX(-180deg);
 }
 
 /* DASHBOARD */
-#page-dashboard{
-  padding-top:20px;
-}
-
-.dash-hero{
-  background:var(--green-dark);
-  color:white;
+.hero{
+  background:#3b4a3a;
+  color:#fff;
+  width:100%;
   text-align:center;
-  padding:30px;
+  padding:30px 10px;
 }
 
-.dash-grid{
+.grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  padding:12px;
+  padding:15px;
+  width:100%;
+  max-width:420px;
 }
 
 .card{
-  background:white;
-  padding:12px;
-  border-radius:8px;
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
   cursor:pointer;
+  text-align:center;
 }
 
-.bottom-row{
-  display:flex;
-  justify-content:space-around;
-  margin-top:20px;
-}
-
-.faq-circle{
+.circle{
   width:80px;
   height:80px;
   border-radius:50%;
-  background:var(--green-dark);
-  color:white;
+  background:#3b4a3a;
+  color:#fff;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
+  cursor:pointer;
+}
+
+/* RSVP */
+input,button{
+  padding:10px;
+  margin:5px;
+  width:200px;
+}
+
+button{
+  background:#3b4a3a;
+  color:#fff;
+  border:none;
   cursor:pointer;
 }
 </style>
@@ -124,84 +112,117 @@ body{
 
 <body>
 
-<!-- PAGE 1 -->
-<div class="page active" id="page-envelope">
-  <div class="env-wrap" id="env">
-    <div class="envelope">
-      <div class="env-flap"></div>
-    </div>
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0a1a5b6b6.mp3?filename=romantic-piano-ambient-110397.mp3" type="audio/mp3">
+</audio>
+
+<button onclick="toggleMusic()" style="position:fixed;top:10px;right:10px;z-index:999">🎵</button>
+
+<!-- ENVELOPE -->
+<div class="page active" id="envelopePage">
+  <div class="envelope" id="env">
+    <div class="flap"></div>
   </div>
-  <p>Tap to open</p>
+  <p>Tap envelope</p>
 </div>
 
-<!-- PAGE 2 -->
-<div class="page" id="page-dashboard">
-  <div class="dash-hero">
-    <h2>Min Min & Tinzar</h2>
+<!-- DASHBOARD -->
+<div class="page" id="dashPage">
+
+  <div class="hero">
+    <h1 style="font-family:Great Vibes">Min Min & Tinzar</h1>
+    <p>Wedding Invitation</p>
   </div>
 
-  <div class="dash-grid">
+  <div class="grid">
 
-    <div class="card" onclick="showPage('page-details')">
-      Wedding Details
-    </div>
+    <div class="card" onclick="go('details')">Details</div>
+    <div class="card" onclick="go('timeline')">Timeline</div>
+    <div class="card" onclick="go('rsvp')">RSVP</div>
 
-    <div class="card" onclick="showPage('page-timeline')">
-      Timeline
-    </div>
-
-    <div class="card" onclick="showPage('page-faq')">
-      FAQ
-    </div>
-
-    <div class="card">
-      RSVP
-    </div>
+    <div class="card" onclick="openMap()">Location</div>
 
   </div>
 
-  <div class="bottom-row">
-    <div style="font-size:30px;opacity:.4">🌼</div>
+  <div class="circle" onclick="go('faq')">HELP</div>
 
-    <div class="faq-circle" onclick="showPage('page-faq')">
-      <div>HELP</div>
-    </div>
-  </div>
 </div>
 
-<!-- PAGE 3 -->
-<div class="page" id="page-details">
-  <h2 style="padding:20px">Wedding Details</h2>
-  <button onclick="showPage('page-dashboard')">Back</button>
+<!-- DETAILS -->
+<div class="page" id="details">
+  <h2>Wedding Details</h2>
+  <button onclick="back()">Back</button>
 </div>
 
-<!-- PAGE 4 -->
-<div class="page" id="page-timeline">
-  <h2 style="padding:20px">Timeline</h2>
-  <button onclick="showPage('page-dashboard')">Back</button>
+<!-- TIMELINE -->
+<div class="page" id="timeline">
+  <h2>Timeline</h2>
+  <button onclick="back()">Back</button>
 </div>
 
-<!-- PAGE 5 -->
-<div class="page" id="page-faq">
-  <h2 style="padding:20px">FAQ</h2>
-  <button onclick="showPage('page-dashboard')">Back</button>
+<!-- RSVP -->
+<div class="page" id="rsvp">
+  <h2>RSVP Form</h2>
+
+  <input id="name" placeholder="Your Name"/>
+  <input id="guest" placeholder="Guests"/>
+
+  <button onclick="saveRSVP()">Submit</button>
+
+  <p id="msg"></p>
+
+  <button onclick="back()">Back</button>
+</div>
+
+<!-- FAQ -->
+<div class="page" id="faq">
+  <h2>FAQ</h2>
+  <button onclick="back()">Back</button>
 </div>
 
 <script>
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>{
-    p.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
+let music = document.getElementById("music");
+
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
 }
 
 document.getElementById("env").addEventListener("click",()=>{
-  document.getElementById("env").classList.add("opening");
+  document.getElementById("env").classList.add("open");
 
   setTimeout(()=>{
-    showPage("page-dashboard");
+    go("dash");
   },800);
 });
+
+function go(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+  if(page==="dash") document.getElementById("dashPage").classList.add("active");
+  else document.getElementById(page).classList.add("active");
+}
+
+function back(){
+  go("dash");
+}
+
+function openMap(){
+  window.open("https://maps.google.com?q=Abu+Dhabi+Wedding+Venue");
+}
+
+function saveRSVP(){
+  let name=document.getElementById("name").value;
+  let guest=document.getElementById("guest").value;
+
+  localStorage.setItem("rsvp",JSON.stringify({name,guest}));
+
+  document.getElementById("msg").innerText="Saved ✔ Thank you!";
+}
 </script>
 
 </body>
