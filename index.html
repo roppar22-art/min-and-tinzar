@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Min Min & Tinzar Wedding</title>
+<title>Wedding Invitation</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400&display=swap" rel="stylesheet"/>
 
@@ -25,6 +25,7 @@ body{
   opacity:0;
   pointer-events:none;
   transition:.5s;
+  padding:20px;
 }
 
 .page.active{
@@ -33,11 +34,15 @@ body{
 }
 
 /* ENVELOPE */
+#page1{
+  background:#f5ede8;
+}
+
 .envelope{
   width:280px;
   height:180px;
   background:#3b4a3a;
-  border-radius:6px;
+  border-radius:8px;
   position:relative;
   cursor:pointer;
 }
@@ -56,56 +61,91 @@ body{
   transform:rotateX(-180deg);
 }
 
-/* DASHBOARD */
-.hero{
+/* BUTTON */
+button{
+  padding:10px 15px;
+  margin-top:10px;
   background:#3b4a3a;
-  color:#fff;
-  width:100%;
-  text-align:center;
-  padding:30px 10px;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
 }
 
+/* DASHBOARD */
+#page2{
+  background:#f5ede8;
+}
+
+.hero{
+  text-align:center;
+  background:#3b4a3a;
+  color:white;
+  width:100%;
+  padding:25px;
+}
+
+.hero h1{
+  font-family:"Great Vibes";
+  font-size:40px;
+}
+
+/* IMAGE */
+.couple{
+  width:200px;
+  height:200px;
+  background:#ddd;
+  border-radius:12px;
+  margin:15px 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+}
+
+/* COUNTDOWN */
+.countdown{
+  font-size:18px;
+  margin:10px;
+}
+
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  padding:15px;
   width:100%;
-  max-width:420px;
+  max-width:400px;
 }
 
 .card{
-  background:#fff;
+  background:white;
   padding:15px;
   border-radius:10px;
+  text-align:center;
   cursor:pointer;
+}
+
+/* DETAILS */
+#page3{
+  background:#f5ede8;
+}
+
+.box{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  width:100%;
+  max-width:350px;
   text-align:center;
 }
 
-.circle{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-  background:#3b4a3a;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
-
-/* RSVP */
-input,button{
-  padding:10px;
-  margin:5px;
-  width:200px;
-}
-
-button{
-  background:#3b4a3a;
-  color:#fff;
-  border:none;
-  cursor:pointer;
+/* MUSIC BUTTON */
+#musicBtn{
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:999;
 }
 </style>
 </head>
@@ -114,115 +154,98 @@ button{
 
 <!-- MUSIC -->
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0a1a5b6b6.mp3?filename=romantic-piano-ambient-110397.mp3" type="audio/mp3">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0a1a5b6b6.mp3?filename=romantic-piano-ambient-110397.mp3">
 </audio>
 
-<button onclick="toggleMusic()" style="position:fixed;top:10px;right:10px;z-index:999">🎵</button>
+<button id="musicBtn" onclick="toggleMusic()">🎵</button>
 
-<!-- ENVELOPE -->
-<div class="page active" id="envelopePage">
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
   <div class="envelope" id="env">
     <div class="flap"></div>
   </div>
   <p>Tap envelope</p>
 </div>
 
-<!-- DASHBOARD -->
-<div class="page" id="dashPage">
+<!-- PAGE 2 -->
+<div class="page" id="page2">
 
   <div class="hero">
-    <h1 style="font-family:Great Vibes">Min Min & Tinzar</h1>
+    <h1>Min Min & Tinzar</h1>
     <p>Wedding Invitation</p>
   </div>
 
+  <div class="couple">💑</div>
+
+  <div class="countdown" id="countdown"></div>
+
   <div class="grid">
 
-    <div class="card" onclick="go('details')">Details</div>
-    <div class="card" onclick="go('timeline')">Timeline</div>
-    <div class="card" onclick="go('rsvp')">RSVP</div>
-
-    <div class="card" onclick="openMap()">Location</div>
+    <div class="card" onclick="go('page3')">Details</div>
+    <div class="card" onclick="go('page3')">Location</div>
+    <div class="card" onclick="go('page3')">Time</div>
+    <div class="card" onclick="go('page2')">Back</div>
 
   </div>
 
-  <div class="circle" onclick="go('faq')">HELP</div>
-
 </div>
 
-<!-- DETAILS -->
-<div class="page" id="details">
-  <h2>Wedding Details</h2>
-  <button onclick="back()">Back</button>
-</div>
+<!-- PAGE 3 -->
+<div class="page" id="page3">
 
-<!-- TIMELINE -->
-<div class="page" id="timeline">
-  <h2>Timeline</h2>
-  <button onclick="back()">Back</button>
-</div>
+  <div class="box">
+    <h2>Wedding Details</h2>
 
-<!-- RSVP -->
-<div class="page" id="rsvp">
-  <h2>RSVP Form</h2>
+    <p>📍 Location: Abu Dhabi Wedding Hall</p>
+    <p>🕒 Time: 6:00 PM</p>
+    <p>📅 Date: 14 Dec 2025</p>
 
-  <input id="name" placeholder="Your Name"/>
-  <input id="guest" placeholder="Guests"/>
+    <button onclick="go('page2')">⬅ Back</button>
+  </div>
 
-  <button onclick="saveRSVP()">Submit</button>
-
-  <p id="msg"></p>
-
-  <button onclick="back()">Back</button>
-</div>
-
-<!-- FAQ -->
-<div class="page" id="faq">
-  <h2>FAQ</h2>
-  <button onclick="back()">Back</button>
 </div>
 
 <script>
-let music = document.getElementById("music");
 
-function toggleMusic(){
-  if(music.paused){
-    music.play();
-  }else{
-    music.pause();
-  }
+/* PAGE NAV */
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
+/* ENVELOPE OPEN */
 document.getElementById("env").addEventListener("click",()=>{
   document.getElementById("env").classList.add("open");
 
   setTimeout(()=>{
-    go("dash");
+    go("page2");
   },800);
 });
 
-function go(page){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+/* MUSIC */
+let music=document.getElementById("music");
 
-  if(page==="dash") document.getElementById("dashPage").classList.add("active");
-  else document.getElementById(page).classList.add("active");
+function toggleMusic(){
+  if(music.paused) music.play();
+  else music.pause();
 }
 
-function back(){
-  go("dash");
-}
+/* COUNTDOWN */
+let weddingDate = new Date("2025-12-14T18:00:00").getTime();
 
-function openMap(){
-  window.open("https://maps.google.com?q=Abu+Dhabi+Wedding+Venue");
-}
+setInterval(()=>{
+  let now = new Date().getTime();
+  let diff = weddingDate - now;
 
-function saveRSVP(){
-  let name=document.getElementById("name").value;
-  let guest=document.getElementById("guest").value;
+  let days = Math.floor(diff/(1000*60*60*24));
+  let hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  let mins = Math.floor((diff%(1000*60*60))/(1000*60));
+  let secs = Math.floor((diff%(1000*60))/1000);
 
-  localStorage.setItem("rsvp",JSON.stringify({name,guest}));
+  document.getElementById("countdown").innerHTML =
+  `⏳ ${days}d ${hours}h ${mins}m ${secs}s`;
+},1000);
 
-  document.getElementById("msg").innerText="Saved ✔ Thank you!";
-}
 </script>
 
 </body>
